@@ -1,0 +1,19 @@
+.bottomSheet-enter {
+  bottom: -100%;
+}
+
+.bottomSheet-enter-active {
+  bottom: 0px;
+  transition: bottom 600ms ease-in-out;
+  -webkit-transition: bottom 600ms ease-in-out;
+}
+
+.bottomSheet-exit {
+  bottom: 0px;
+}
+
+.bottomSheet-exit-active {
+  bottom: -100%;
+  transition: bottom 600ms ease-in-out;
+  -webkit-transition: bottom 600ms ease-in-out;
+}
