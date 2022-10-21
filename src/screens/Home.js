@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import BottomNavigation from "../components/BottomNavigation";
 import route from "../routes";
 import { Link } from "react-router-dom";
+import useUser from "../hooks/useUser";
 
 const Body = styled.div`
   background-color: #f5f5f5;
@@ -48,6 +49,9 @@ const SearchBtn = styled.button`
 `;
 
 function Home({ history }) {
+  const {
+    me: { username, avatar },
+  } = useUser();
   return (
     <>
       <Appbar.AppbarBox>
@@ -67,7 +71,7 @@ function Home({ history }) {
       <Body>
         <Container>
           <H2>
-            홍길동님
+            {username}님
             <br />
             <Hightlight>제육볶음</Hightlight>(은)는
             <br />

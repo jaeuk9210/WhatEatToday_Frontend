@@ -22,6 +22,7 @@ import Textinput from "../components/Textinput";
 import { useForm } from "react-hook-form";
 import { gql, useMutation } from "@apollo/client";
 import route from "../routes";
+import { useHistory } from "react-router-dom";
 
 const SForm = styled.form`
   display: flex;
@@ -96,13 +97,12 @@ const EXIST_ACCOUNT_MUTATION = gql`
   mutation existAccount($email: String!) {
     existAccount(email: $email) {
       ok
-      result
-      error
     }
   }
 `;
 
 function Welcome({ history }) {
+  history = useHistory();
   const settings = {
     dots: true,
     arrows: false,
@@ -141,14 +141,14 @@ function Welcome({ history }) {
   });
 
   const onCompleted = (data) => {
+    const { email } = getValues();
     const {
-      existAccount: { result },
+      existAccount: { ok },
     } = data;
-    console.log("result", result);
-    if (result) {
-      history.push("/login");
+    if (ok) {
+      history.push(route.login, { email });
     } else {
-      history.push(route.signUp);
+      history.push(route.signUp, { email });
     }
   };
 
@@ -164,7 +164,6 @@ function Welcome({ history }) {
     existAccount({
       variables: { email },
     });
-    console.log("email", email);
   };
 
   return (

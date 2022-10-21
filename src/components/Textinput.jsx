@@ -41,6 +41,7 @@ function Textinput({
   register,
   id,
   validationSchema,
+  onChange,
 }) {
   return (
     <STextinput>

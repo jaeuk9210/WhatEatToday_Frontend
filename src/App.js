@@ -7,7 +7,7 @@ import { GlobalStyles, lightTheme } from "./style";
 import { HelmetProvider } from "react-helmet-async";
 import route from "./routes";
 import Signup from "./screens/Signup";
-import { ApolloProvider } from "@apollo/client";
+import { ApolloProvider, useReactiveVar } from "@apollo/client";
 import Login from "./screens/Login";
 import Home from "./screens/Home";
 import Like from "./screens/Like";
@@ -16,10 +16,11 @@ import Cart from "./screens/Cart";
 import Search from "./screens/Search";
 import Test from "./screens/Test";
 import Choose from "./screens/Choose";
-import { client } from "./apollo";
+import { client, isLoggedInVar } from "./apollo";
 
 function App() {
-  const isLoggedin = true;
+  const isLoggedin = useReactiveVar(isLoggedInVar);
+
   return (
     <ApolloProvider client={client}>
       <HelmetProvider>

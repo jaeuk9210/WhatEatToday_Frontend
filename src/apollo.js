@@ -1,6 +1,22 @@
-import { makeVar, ApolloClient, InMemoryCache } from "@apollo/client";
+import {
+  makeVar,
+  ApolloClient,
+  InMemoryCache,
+  createHttpLink,
+} from "@apollo/client";
+import { setContext } from "@apollo/client/link/context";
+//Login
+const TOKEN = "token";
 
-export const isLoggedInVar = makeVar(false);
+export const isLoggedInVar = makeVar(Boolean(localStorage.getItem(TOKEN)));
+export const logUserIn = (token) => {
+  localStorage.setItem(TOKEN, token);
+  isLoggedInVar(true);
+};
+export const logUserOut = () => {
+  localStorage.removeItem(TOKEN);
+  isLoggedInVar(false);
+};
 
 //BottomSheet Control
 export const isShowSocialBottomSheetVar = makeVar(false);
@@ -25,7 +41,22 @@ export const choicedEndTime = makeVar({
   meridiem: "PM",
 });
 
-export const client = new ApolloClient({
+const httpLink = createHttpLink({
   uri: "http://localhost:4002/graphql",
+});
+
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem(TOKEN);
+
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : "",
+    },
+  };
+});
+
+export const client = new ApolloClient({
+  link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
 });

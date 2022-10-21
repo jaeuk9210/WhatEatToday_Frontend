@@ -5,6 +5,7 @@ import PageTitle from "../components/PageTitle";
 import { H1, SH2 } from "../style";
 import Textinput from "../components/Textinput";
 import { useForm } from "react-hook-form";
+import { IButton } from "../components/Buttons";
 
 const Body = styled.div`
   padding: 0 21px 0 21px;
@@ -129,8 +130,8 @@ function Signup({ history }) {
               title="닉네임"
               type="text"
               placeholder="닉네임을 입력해주세요"
-              onChange={() => console.log(isValid)}
             />
+            <IButton value="로그인" />
           </Form>
         </div>
       </Body>

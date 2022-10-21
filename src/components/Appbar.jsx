@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const AppbarBox = styled.div`
+export const AppbarBox = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
