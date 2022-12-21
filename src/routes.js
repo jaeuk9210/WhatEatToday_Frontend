@@ -8,6 +8,10 @@ const route = {
   choose: "/choose",
   cart: "/cart",
   test: "/test",
+  setting: "/setting",
+  logout: "/logout",
+  place: "/place",
+  story: "/story",
 };
 
 export default route;

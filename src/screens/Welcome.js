@@ -16,8 +16,7 @@ import {
   IButton,
 } from "../components/Buttons";
 import PageTitle from "../components/PageTitle";
-import * as Appbar from "../components/Appbar";
-import { SH2 } from "../style";
+import { H2 } from "../style";
 import Textinput from "../components/Textinput";
 import { useForm } from "react-hook-form";
 import { gql, useMutation } from "@apollo/client";
@@ -30,10 +29,6 @@ const SForm = styled.form`
   align-items: flex-start;
   padding: 0px;
   gap: 30px;
-`;
-
-const H2 = styled(SH2)`
-  text-align: center;
 `;
 
 const Body = styled.div`
@@ -74,23 +69,23 @@ const Hightlight = styled.span`
 `;
 
 const Container = styled.div`
-  height: 100vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  align-items: center;
+  flex-grow: 1;
 `;
 
-const TextBtn = styled.p`
-  margin-right: 13px;
-  font-family: "Pretendard";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 23px;
-  /* identical to box height, or 144% */
-  text-align: right;
-
-  color: ${(props) => props.theme.accentColor};
+const Wrapper = styled.div`
+  display: flex;
+  max-width: 930px;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  justify-content: space-between;
+  flex-direction: column;
+  padding-top: 20px;
 `;
 
 const EXIST_ACCOUNT_MUTATION = gql`
@@ -169,17 +164,10 @@ function Welcome({ history }) {
   return (
     <Container>
       <PageTitle title="오늘 뭐 먹지?" />
-      <Appbar.AppbarBox>
-        <Appbar.AppbarLeft />
-        <Appbar.AppbarCenter />
-        <Appbar.AppbarRight>
-          <TextBtn>건너뛰기</TextBtn>
-        </Appbar.AppbarRight>
-      </Appbar.AppbarBox>
-      <div>
+      <Wrapper>
         <Slider {...settings}>
           <Body>
-            <H2>
+            <H2 align={"center"}>
               조건을 입력하고
               <br />
               <Hightlight>AI에게 메뉴를 추천</Hightlight> 받아보세요
@@ -187,7 +175,7 @@ function Welcome({ history }) {
             <img alt="slider1" src="welcome/slide1.png" />
           </Body>
           <Body>
-            <H2>
+            <H2 align={"center"}>
               맛있는 경험을 공유하며
               <br />
               <Hightlight>음식 커뮤니티</Hightlight>를 만들어보세요
@@ -195,7 +183,7 @@ function Welcome({ history }) {
             <img alt="slider2" src="welcome/slide2.png" />
           </Body>
           <Body>
-            <H2>
+            <H2 align={"center"}>
               여러분의 참여는
               <br />
               <Hightlight>식당의 발전</Hightlight>을 불러옵니다
@@ -203,21 +191,21 @@ function Welcome({ history }) {
             <img alt="slider3" src="welcome/slide3.png" />
           </Body>
         </Slider>
-      </div>
-      <Bottom>
-        <Subtitle>
-          계속 진행하면 ‘오늘 뭐 먹지’ 서비스 약관에 동의하고 <br />
-          개인정보 보호정책을 읽었음을 인정하는 것으로 간주됩니다.
-        </Subtitle>
-        <OutlineButton
-          onClick={() => isShowEmailBottomSheetVar(true)}
-          value="이메일로 로그인하기"
-        />
-        <SolidIButton
-          onClick={() => isShowSocialBottomSheetVar(true)}
-          value="소셜계정으로 로그인하기"
-        />
-      </Bottom>
+        <Bottom>
+          <Subtitle>
+            계속 진행하면 ‘오늘 뭐 먹지’ 서비스 약관에 동의하고 <br />
+            개인정보 보호정책을 읽었음을 인정하는 것으로 간주됩니다.
+          </Subtitle>
+          <OutlineButton
+            onClick={() => isShowEmailBottomSheetVar(true)}
+            value="이메일로 로그인하기"
+          />
+          <SolidIButton
+            onClick={() => isShowSocialBottomSheetVar(true)}
+            value="소셜계정으로 로그인하기"
+          />
+        </Bottom>
+      </Wrapper>
       <BottomSheet reactVar={isShowSocialBottomSheetVar}>
         <SocialLoginButton
           social="google"

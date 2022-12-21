@@ -4,7 +4,8 @@ import React from "react";
 export const IButton = styled.input.attrs({
   type: "submit",
 })`
-  width: 334px;
+  max-width: 334px;
+  width: 100%;
   height: 55px;
 
   font-family: "Pretendard";
@@ -17,10 +18,17 @@ export const IButton = styled.input.attrs({
 
   border-radius: 500px;
   border: 1px solid;
+  cursor: pointer;
+  &:disabled {
+    cursor: default;
+    background: #dddddd;
+    color: #fff;
+  }
 `;
 
 export const Button = styled.button`
-  width: 334px;
+  max-width: 334px;
+  width: 100%;
   height: 55px;
 
   font-family: "Pretendard";
@@ -33,27 +41,39 @@ export const Button = styled.button`
 
   border-radius: 500px;
   border: 1px solid;
+  &:disabled {
+    background: #dddddd;
+    color: #fff;
+  }
 `;
 
 const FacebookButton = styled(Button)`
+  display: flex;
   border: none;
+  justify-content: center;
   background: #3a559f;
   color: #fff;
 `;
 
 const GoogleButton = styled(Button)`
+  display: flex;
+  justify-content: center;
   border: 1px solid #f1f1f1;
   background: #f8f8f8;
   color: #000;
 `;
 
 const KakaoButton = styled(Button)`
+  display: flex;
+  justify-content: center;
   border: none;
   background: #fee500;
   color: #391b1b;
 `;
 
 const AppleButton = styled(Button)`
+  display: flex;
+  justify-content: center;
   border: 1px solid #f1f1f1;
   background: #fff;
   color: #000;

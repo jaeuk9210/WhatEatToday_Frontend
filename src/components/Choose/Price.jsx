@@ -1,29 +1,68 @@
-import { useReactiveVar } from "@apollo/client";
 import React from "react";
 import styled from "styled-components";
 import {
   isShowMinPriceBottomSheetVar,
   isShowMaxPriceBottomSheetVar,
-  choicedMinPrice,
-  choicedMaxPrice,
 } from "../../apollo";
-import { Hightlight, SH2 as H2 } from "../../style";
+import { Hightlight, H2 } from "../../style";
 
 const Body = styled.div`
   display: flex;
   flex-direction: column;
 `;
 
-const PriceBox = styled.div``;
+const PriceBox = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin: 80px auto 0px auto;
+
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 34px;
+
+  letter-spacing: -0.03em;
+
+  color: #dddddd;
+`;
 
 const Title = styled.div`
   margin-top: 30px;
-  margin-bottom: 25px;
 `;
 
-function Price({ setValue }) {
-  const minPrice = useReactiveVar(choicedMinPrice);
-  const maxPrice = useReactiveVar(choicedMaxPrice);
+const PriceText = styled.span`
+  display: flex;
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 32px;
+  line-height: 34px;
+  /* identical to box height, or 106% */
+
+  letter-spacing: -0.03em;
+
+  color: ${(props) => (props.selected ? "#1A1A1A" : "#EEEEEE")};
+  align-items: center;
+`;
+
+const Won = styled.span`
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 34px;
+  /* identical to box height, or 189% */
+
+  letter-spacing: -0.03em;
+  margin-left: 3px;
+  color: #aaaaaa;
+`;
+
+function Price({ setValue, watch }) {
+  const minPrice = watch("minPrice", "");
+  const maxPrice = watch("maxPrice", "");
 
   return (
     <Body>
@@ -35,24 +74,27 @@ function Price({ setValue }) {
         </H2>
       </Title>
       <PriceBox>
-        <span
+        <PriceText
+          selected={watch("minPrice", "").price}
           onClick={() => {
             isShowMinPriceBottomSheetVar(true);
             setValue("minPrice", minPrice);
           }}
         >
           {minPrice.price.toLocaleString("ko-KR")}
-        </span>
-        원~
-        <span
+          <Won>원</Won>
+        </PriceText>
+        ~
+        <PriceText
+          selected={watch("maxPrice", "").price}
           onClick={() => {
             isShowMaxPriceBottomSheetVar(true);
             setValue("maxPrice", maxPrice);
           }}
         >
           {maxPrice.price.toLocaleString("ko-KR")}
-        </span>
-        원
+          <Won>원</Won>
+        </PriceText>
       </PriceBox>
     </Body>
   );

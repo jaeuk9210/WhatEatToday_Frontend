@@ -3,13 +3,13 @@
 }
 
 .bottomSheet-enter-active {
-  bottom: 0px;
+  bottom: 0;
   transition: bottom 600ms ease-in-out;
   -webkit-transition: bottom 600ms ease-in-out;
 }
 
 .bottomSheet-exit {
-  bottom: 0px;
+  bottom: 0;
 }
 
 .bottomSheet-exit-active {

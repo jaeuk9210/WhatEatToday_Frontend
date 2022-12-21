@@ -1,30 +1,33 @@
-import { useReactiveVar } from "@apollo/client";
-import React from "react";
+import React, { useState } from "react";
+import { useEffect } from "react";
 import Picker from "react-scrollable-picker";
 import { objectWithoutKey } from "../utils";
 
-function ScrollPicker({ data, reactVar, setValue, valueName, removeKey }) {
-  const range = useReactiveVar(reactVar);
+function ScrollPicker({ data, setValue, defaultValue, valueName, removeKey }) {
+  const [range, setRange] = useState(defaultValue);
   const optionGroups = {
     ...data,
   };
 
-  const handleChange = async (name, value) => {
-    const result = await reactVar({
-      ...range,
-      [name]: value,
+  const handleChange = (name, value) => {
+    setRange((rng) => {
+      return {
+        ...rng,
+        [name]: value,
+      };
     });
-    setValue(
-      valueName,
-      removeKey ? objectWithoutKey(result, removeKey) : result
-    );
   };
+
+  useEffect(() => {
+    setValue(valueName, removeKey ? objectWithoutKey(range, removeKey) : range);
+  }, [range, removeKey, setValue, valueName]);
 
   return (
     <Picker
       optionGroups={optionGroups}
       valueGroups={range}
       onChange={handleChange}
+      itemHeight={41}
     />
   );
 }

@@ -1,19 +1,21 @@
 import React from "react";
 import styled from "styled-components";
 import CheckBox from "../CheckBox";
-import { Hightlight, SH2 as H2, Sub as SSub } from "../../style";
+import { Hightlight, H2, Sub as SSub } from "../../style";
+import useWindowSize from "../../hooks/useWindowSize";
 
 const CheckBoxs = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  flex-direction: center;
-  align-items: center;
+  margin: 0 auto 25px auto;
+  width: ${(props) => props.width || 105 * 5 + 40}px;
 `;
 
 const Body = styled.div`
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 `;
 
 const Sub = styled(SSub)`
@@ -26,7 +28,13 @@ const Title = styled.div`
   margin-bottom: 25px;
 `;
 
-function Categories({ register }) {
+function Categories({ register, watch }) {
+  const windowWidth = useWindowSize().width - 60;
+
+  const col = windowWidth >= 105 * 7 + 60 ? 7 : parseInt(windowWidth / 110);
+
+  const flexboxWidth = col * 105 + (col - 1) * 10;
+
   return (
     <Body>
       <Title>
@@ -37,13 +45,14 @@ function Categories({ register }) {
         </H2>
         <Sub>*다중선택가능</Sub>
       </Title>
-      <CheckBoxs>
+      <CheckBoxs width={flexboxWidth}>
         <CheckBox
           image="MenuChoose/Korean.png"
           name="한식"
           id="categories"
           value="korean"
           register={register}
+          check={watch("categories", "").includes("korean")}
         />
         <CheckBox
           image="MenuChoose/Wastern.png"
@@ -51,6 +60,7 @@ function Categories({ register }) {
           id="categories"
           value="wastern"
           register={register}
+          check={watch("categories", "").includes("wastern")}
         />
         <CheckBox
           image="MenuChoose/Chinese.png"
@@ -58,6 +68,7 @@ function Categories({ register }) {
           id="categories"
           value="chinese"
           register={register}
+          check={watch("categories", "").includes("chinese")}
         />
         <CheckBox
           image="MenuChoose/Japanese.png"
@@ -65,6 +76,7 @@ function Categories({ register }) {
           id="categories"
           value="japanese"
           register={register}
+          check={watch("categories", "").includes("japanese")}
         />
         <CheckBox
           image="MenuChoose/Buffet.png"
@@ -72,6 +84,15 @@ function Categories({ register }) {
           id="categories"
           value="buffet"
           register={register}
+          check={watch("categories", "").includes("buffet")}
+        />
+        <CheckBox
+          image="MenuChoose/Snack.png"
+          name="분식"
+          id="categories"
+          value="snack"
+          register={register}
+          check={watch("categories", "").includes("snack")}
         />
         <CheckBox
           image="MenuChoose/Cafe.png"
@@ -79,6 +100,7 @@ function Categories({ register }) {
           id="categories"
           value="cafe"
           register={register}
+          check={watch("categories", "").includes("cafe")}
         />
         <CheckBox
           image="MenuChoose/Pub.png"
@@ -86,6 +108,7 @@ function Categories({ register }) {
           id="categories"
           value="pub"
           register={register}
+          check={watch("categories", "").includes("pub")}
         />
       </CheckBoxs>
     </Body>

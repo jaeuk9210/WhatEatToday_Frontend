@@ -1,37 +1,44 @@
 import React from "react";
 import styled from "styled-components";
-import * as Appbar from "../components/Appbar";
-import { Hightlight, SH2 } from "../style";
-import { faChevronRight, faBars } from "@fortawesome/free-solid-svg-icons";
+import { Container as SContainer, Hightlight, H2 } from "../style";
+import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import BottomNavigation from "../components/BottomNavigation";
 import route from "../routes";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import useUser from "../hooks/useUser";
+import PageTitle from "../components/PageTitle";
+import { gql, useQuery } from "@apollo/client";
 
 const Body = styled.div`
-  background-color: #f5f5f5;
-`;
-
-const LocationBox = styled.div`
+  flex-direction: column;
   display: flex;
-  orientation: row;
+  background-color: #f5f5f5;
+  align-items: center;
+  width: 100%;
 `;
 
-const Container = styled.div`
+const Wraper = styled.div`
+  display: flex;
+  max-width: 930px;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+`;
+
+const Box = styled.div`
+  width: 100%;
   padding: 21px;
   background-color: #fff;
   border-bottom: 1px solid #eee;
   margin-bottom: 12px;
-`;
-
-const H2 = styled(SH2)`
-  font-size: 28px;
-  line-height: 42px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 `;
 
 const LinkedBtn = styled(Link)`
-  display: block;
+  width: fit-content;
+  display: inline-block;
   font-family: "Pretendard";
   font-style: normal;
   font-weight: 500;
@@ -42,53 +49,118 @@ const LinkedBtn = styled(Link)`
 
   color: #bbbbbb;
   margin-top: 20px;
+  position: relative;
 `;
 
-const SearchBtn = styled.button`
-  margin-bottom: 20px;
+const MenuChoose = styled(LinkedBtn)`
+  width: 100%;
+  height: 400px;
 `;
 
-function Home({ history }) {
-  const {
-    me: { username, avatar },
-  } = useUser();
+const FriendFood = styled.div`
+  width: 100px;
+  height: 100px;
+  border-radius: 10px;
+  border: 1px solid #f1f1f1;
+  background-color: #eee;
+  overflow: hidden;
+`;
+
+const FriendFoodImg = styled.img`
+  width: 100%;
+`;
+
+const SubTitle = styled.span`
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 22px;
+  /* identical to box height */
+
+  /* Service Colors/Gray Colors/Black */
+
+  color: #1a1a1a;
+`;
+
+const RowFlex = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+`;
+
+const ColumnFlex = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const FEED_QUERY = gql`
+  query seeFeed {
+    seeFeed {
+      id
+      file
+    }
+  }
+`;
+
+const TopImg = styled.img`
+  position: absolute;
+  max-width: 330px;
+  width: 100%;
+  right: -50px;
+  bottom: 0px;
+`;
+
+const Container = styled(SContainer)`
+  overflow: scroll;
+`;
+
+function Home() {
+  const history = useHistory();
+  const user = useUser().data;
+  const feedData = useQuery(FEED_QUERY).data;
+  console.log(feedData);
   return (
-    <>
-      <Appbar.AppbarBox>
-        <Appbar.AppbarLeft>
-          <div>
-            <div>현재위치는</div>
-            <div>안동 용상</div>
-          </div>
-        </Appbar.AppbarLeft>
-        <Appbar.AppbarCenter />
-        <Appbar.AppbarRight>
-          <button>
-            <FontAwesomeIcon icon={faBars} color="#1a1a1a" size="2x" />
-          </button>
-        </Appbar.AppbarRight>
-      </Appbar.AppbarBox>
+    <Container>
+      <PageTitle title="오늘 뭐 먹지" />
       <Body>
-        <Container>
-          <H2>
-            {username}님
-            <br />
-            <Hightlight>제육볶음</Hightlight>(은)는
-            <br />
-            어떠세요?
-          </H2>
-          <LinkedBtn to={route.choose}>
-            메뉴 고르러가기
-            <FontAwesomeIcon
-              icon={faChevronRight}
-              style={{ marginLeft: "10px" }}
-            />
-          </LinkedBtn>
-        </Container>
-        <Container>test</Container>
+        <Wraper>
+          <Box>
+            <MenuChoose to={route.choose}>
+              <ColumnFlex>
+                <H2 size={"28px"} height={"42px"}>
+                  {user?.me?.username}님
+                  <br />
+                  <Hightlight>제육볶음</Hightlight>(은)는
+                  <br />
+                  어떠세요?
+                </H2>
+                <p>
+                  메뉴 고르러가기
+                  <FontAwesomeIcon
+                    icon={faChevronRight}
+                    style={{ marginLeft: "10px" }}
+                  />
+                </p>
+              </ColumnFlex>
+              <TopImg src="./Home.png" />
+            </MenuChoose>
+          </Box>
+          <Box>
+            <SubTitle>친구는 뭐먹지?</SubTitle>
+            <RowFlex>
+              {feedData?.seeFeed?.map((review) => (
+                <LinkedBtn to={"/story/" + review.id} key={review.id}>
+                  <FriendFood>
+                    <FriendFoodImg src={review.file[0]}></FriendFoodImg>
+                  </FriendFood>
+                </LinkedBtn>
+              ))}
+            </RowFlex>
+          </Box>
+        </Wraper>
       </Body>
-      <BottomNavigation active="home" />
-    </>
+    </Container>
   );
 }
 

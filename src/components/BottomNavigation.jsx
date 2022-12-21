@@ -4,13 +4,19 @@ import route from "../routes";
 
 const Container = styled.div`
   display: flex;
-  justify-content: space-around;
-  align-items: center;
-  position: fixed;
+  justify-content: center;
+  position: absolute;
   bottom: 0;
-
-  width: 100vw;
+  width: 100%;
   height: 55px;
+`;
+
+const Wrapper = styled.div`
+  justify-content: space-around;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  max-width: 930px;
 
   /* Service Colors/Gray Colors/White */
   background: #ffffff;
@@ -20,6 +26,7 @@ const Container = styled.div`
 
 const Btn = styled(Link)`
   align-items: center;
+  background-color: transparent;
 `;
 
 const SearchBtn = styled(Btn)`
@@ -31,41 +38,43 @@ const SearchBtn = styled(Btn)`
 function BottomNavigation({ active }) {
   return (
     <Container>
-      <Btn to={route.home}>
-        <img
-          src={`icon/bottomNav/${
-            active === "home" ? "home.active" : "home"
-          }.svg`}
-          alt="home"
-        />
-      </Btn>
-      <Btn to={route.like}>
-        <img
-          src={`icon/bottomNav/${
-            active === "like" ? "like.active" : "like"
-          }.svg`}
-          alt="like"
-        />
-      </Btn>
-      <SearchBtn to={route.search}>
-        <img src="icon/bottomNav/search.svg" alt="search" />
-      </SearchBtn>
-      <Btn to={route.notification}>
-        <img
-          src={`icon/bottomNav/${
-            active === "notification" ? "notification.active" : "notification"
-          }.svg`}
-          alt="notification"
-        />
-      </Btn>
-      <Btn to={route.cart}>
-        <img
-          src={`icon/bottomNav/${
-            active === "cart" ? "cart.active" : "cart"
-          }.svg`}
-          alt="cart"
-        />
-      </Btn>
+      <Wrapper>
+        <Btn to={route.home}>
+          <img
+            src={`icon/bottomNav/${
+              active === "home" ? "home.active" : "home"
+            }.svg`}
+            alt="home"
+          />
+        </Btn>
+        <Btn to={route.like}>
+          <img
+            src={`icon/bottomNav/${
+              active === "like" ? "like.active" : "like"
+            }.svg`}
+            alt="like"
+          />
+        </Btn>
+        <SearchBtn to={route.search}>
+          <img src="icon/bottomNav/search.svg" alt="search" />
+        </SearchBtn>
+        <Btn to={route.notification}>
+          <img
+            src={`icon/bottomNav/${
+              active === "notification" ? "notification.active" : "notification"
+            }.svg`}
+            alt="notification"
+          />
+        </Btn>
+        <Btn to={route.setting}>
+          <img
+            src={`icon/bottomNav/${
+              active === "profile" ? "profile.active" : "profile"
+            }.svg`}
+            alt="profile"
+          />
+        </Btn>
+      </Wrapper>
     </Container>
   );
 }

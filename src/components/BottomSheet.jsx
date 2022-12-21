@@ -5,16 +5,18 @@ import { useReactiveVar } from "@apollo/client";
 import "./BottomSheet.css";
 
 const Sheet = styled.div`
-  height: 100%;
+  max-width: 930px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   position: fixed;
+  bottom: 0%;
   justify-content: flex-end;
+  align-items: center;
 `;
 
 const BottomSheetTop = styled.div`
-  bottom: 0px;
-  width: 100vw;
+  width: 100%;
   height: 40px;
   background: #fff;
   border-radius: 20px 20px 0px 0px;
@@ -36,7 +38,7 @@ const BottomSheetContent = styled.div`
   gap: 10px;
   flex-direction: column;
   align-items: center;
-  width: 100vw;
+  width: 100%;
 `;
 
 function BottomSheet({ children, reactVar }) {

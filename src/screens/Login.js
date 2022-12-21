@@ -1,15 +1,30 @@
 import { gql, useMutation } from "@apollo/client";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { logUserIn } from "../apollo";
-import * as Appbar from "../components/Appbar";
-import { IButton } from "../components/Buttons";
+import { SolidIButton } from "../components/Buttons";
 import PageTitle from "../components/PageTitle";
 import Textinput from "../components/Textinput";
 import route from "../routes";
-import { H1, SH2 } from "../style";
+import { H2 } from "../style";
+
+const Container = styled.div`
+  width: 100%;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Wrapper = styled.div`
+  max-width: 930px;
+  width: 100%;
+  height: 100vh;
+  background: #fff;
+`;
 
 const ErrorMsg = styled.span`
   font-family: "Pretendard";
@@ -42,15 +57,16 @@ const Subtitle = styled.span`
   flex-grow: 0;
 `;
 
-const Header = styled.div`
+const Text = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   padding: 0px;
   gap: 15px;
+  margin-top: 25px;
 `;
 
-const H2 = styled(SH2)`
+const SH2 = styled(H2)`
   flex: none;
   order: 0;
   flex-grow: 0;
@@ -59,9 +75,10 @@ const H2 = styled(SH2)`
 const Form = styled.form`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   padding: 0px;
   gap: 30px;
+  margin-top: 70px;
 `;
 
 const LOGIN_MUTATION = gql`
@@ -74,7 +91,12 @@ const LOGIN_MUTATION = gql`
   }
 `;
 
-function Login({ history }) {
+const Top = styled.div`
+  margin-top: 35px;
+`;
+
+function Login() {
+  const history = useHistory();
   const location = useLocation();
   const {
     register,
@@ -121,74 +143,65 @@ function Login({ history }) {
   };
 
   return (
-    <>
+    <Container>
       <PageTitle title="로그인" />
-      <Appbar.AppbarBox>
-        <Appbar.AppbarLeft>
-          <button onClick={() => history.goBack()}>
-            <img src="icon/back.svg" alt="back" />
-          </button>
-        </Appbar.AppbarLeft>
-        <Appbar.AppbarCenter>
-          <H1>로그인</H1>
-        </Appbar.AppbarCenter>
-        <Appbar.AppbarRight />
-      </Appbar.AppbarBox>
-      <Body>
-        <div>
-          <img src="logo.svg" alt="logo" />
-          <Header>
-            <H2>
-              안녕하세요
-              <br />
-              다시 만나 반갑습니다!
-            </H2>
-            <Subtitle>로그인을 하시고 저희 서비스를 이용해보세요.</Subtitle>
-          </Header>
-        </div>
-        <Form onSubmit={handleSubmit(onSubmit)}>
-          <Textinput
-            id="email"
-            validationSchema={{
-              required: "Email is required",
-              pattern: {
-                value:
-                  /^[-0-9A-Za-z!#$%&'*+/=?^_`{|}~.]+@[-0-9A-Za-z!#$%&'*+/=?^_`{|}~]+[.]{1}[0-9A-Za-z]/,
-                message: "Please input current Email",
-              },
-              onChange() {
-                clearErrors("result");
-              },
-            }}
-            register={register}
-            errors={errors}
-            title="이메일"
-            type="email"
-            placeholder="jaeuk@jeuke.com"
-            onChange={() => clearErrors("result")}
-          />
-          <Textinput
-            id="password"
-            validationSchema={{
-              required: "Password is required",
-              onChange() {
-                clearErrors("result");
-              },
-            }}
-            register={register}
-            errors={errors}
-            title="비밀번호"
-            type="password"
-            placeholder="******"
-          />
-          <IButton
-            value={loading ? "로딩중" : "로그인"}
-            disabled={!isValid || loading || !isDirty}
-          />
-          <ErrorMsg>{errors?.result?.message}</ErrorMsg>
-        </Form>
-      </Body>
-    </>
+      <Wrapper>
+        <Body>
+          <Top>
+            <img src="logo.svg" alt="logo" />
+            <Text>
+              <SH2>
+                안녕하세요
+                <br />
+                다시 만나 반갑습니다!
+              </SH2>
+              <Subtitle>로그인을 하시고 저희 서비스를 이용해보세요.</Subtitle>
+            </Text>
+          </Top>
+          <Form onSubmit={handleSubmit(onSubmit)}>
+            <Textinput
+              id="email"
+              validationSchema={{
+                required: "Email is required",
+                pattern: {
+                  value:
+                    /^[-0-9A-Za-z!#$%&'*+/=?^_`{|}~.]+@[-0-9A-Za-z!#$%&'*+/=?^_`{|}~]+[.]{1}[0-9A-Za-z]/,
+                  message: "Please input current Email",
+                },
+                onChange() {
+                  clearErrors("result");
+                },
+              }}
+              register={register}
+              errors={errors}
+              title="이메일"
+              type="email"
+              placeholder="jaeuk@jeuke.com"
+              onChange={() => clearErrors("result")}
+            />
+            <Textinput
+              id="password"
+              validationSchema={{
+                required: "Password is required",
+                onChange() {
+                  clearErrors("result");
+                },
+              }}
+              register={register}
+              errors={errors}
+              title="비밀번호"
+              type="password"
+              placeholder="******"
+            />
+            <SolidIButton
+              value={loading ? "로딩중" : "로그인"}
+              disabled={!isValid || loading || !isDirty}
+            />
+            <ErrorMsg>{errors?.result?.message}</ErrorMsg>
+          </Form>
+        </Body>
+      </Wrapper>
+    </Container>
   );
 }
 
