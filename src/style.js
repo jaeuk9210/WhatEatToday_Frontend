@@ -30,7 +30,9 @@ export const GlobalStyles = createGlobalStyle`
     font-style: normal;
     background-color: #f5f5f5;
     -ms-overflow-style: none;
+    overflow: hidden;
   }
+
   ::-webkit-scrollbar {
     display: none;
   }
