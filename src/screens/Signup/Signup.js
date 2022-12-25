@@ -124,6 +124,7 @@ function Signup() {
     onCompleted,
   });
   console.log(errors.result);
+
   return (
     <>
       <PageTitle title="회원가입" />
