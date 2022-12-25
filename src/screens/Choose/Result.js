@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
-import { H1, H2, Hightlight, Wrapper } from "../../style";
+import { H1, H2, Hightlight, Wrapper, Box as Container } from "../../style";
 import route from "../../routes";
 
 const Title = styled.div`
@@ -21,16 +21,15 @@ const Box = styled(Link)`
   border-radius: 10px;
 `;
 
-const Container = styled.div`
-  width: 100%;
-  padding: 21px;
-  background-color: #fff;
-  border-bottom: 1px solid #eee;
-  margin-bottom: 12px;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-`;
+// const Container = styled.div`
+//   width: 100%;
+//   padding: 21px;
+//   background-color: #fff;
+//   border-bottom: 1px solid #eee;
+//   margin-bottom: 12px;
+//   display: flex;
+//   flex-direction: column;
+// `;
 
 const TotalPlace = styled.span`
   font-weight: 500;
