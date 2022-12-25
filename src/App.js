@@ -6,7 +6,7 @@ import { ThemeProvider } from "styled-components";
 import { GlobalStyles, lightTheme } from "./style";
 import { HelmetProvider } from "react-helmet-async";
 import route from "./routes";
-import Signup from "./screens/Signup";
+import Signup from "./screens/Signup/Signup";
 import { ApolloProvider, useReactiveVar } from "@apollo/client";
 import Login from "./screens/Login";
 import Home from "./screens/Home";
@@ -24,10 +24,11 @@ import Logout from "./screens/Logout";
 import Place from "./screens/Place";
 import Story from "./screens/Story";
 import Result from "./screens/Choose/Result";
+import AdditionalInfo from "./screens/Signup/AdditionalInfo";
+import useUser from "./hooks/useUser";
 
 function App() {
   const isLoggedin = useReactiveVar(isLoggedInVar);
-
   return (
     <ApolloProvider client={client}>
       <HelmetProvider>
@@ -47,14 +48,29 @@ function App() {
                 )}
               </Route>
 
-              <Route path={route.signUp}>
-                <Signup />
-              </Route>
+              <AuthRoute
+                authenticated={!isLoggedin}
+                path={route.signUp}
+                component={(props) => (
+                  <Layout title="계정 만들기" {...props}>
+                    <Signup />
+                  </Layout>
+                )}
+                exact
+              />
+              <Route
+                path={route.signUp + "/additionalinfo"}
+                component={(props) => (
+                  <Layout title="계정 만들기" {...props}>
+                    <AdditionalInfo />
+                  </Layout>
+                )}
+              />
 
               <Route
                 path={route.login}
                 component={(props) => (
-                  <Layout title="로그인">
+                  <Layout title="로그인" {...props}>
                     <Login />
                   </Layout>
                 )}

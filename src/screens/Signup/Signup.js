@@ -1,15 +1,19 @@
 import React from "react";
 import styled from "styled-components";
-import PageTitle from "../components/PageTitle";
-import { H2 } from "../style";
-import Textinput from "../components/Textinput";
+import PageTitle from "../../components/PageTitle";
+import { H2 } from "../../style";
+import Textinput from "../../components/Textinput";
 import { useForm } from "react-hook-form";
-import { SolidIButton } from "../components/Buttons";
-import { useLocation } from "react-router-dom";
+import { SolidIButton } from "../../components/Buttons";
+import { useHistory, useLocation } from "react-router-dom";
 import { gql, useMutation } from "@apollo/client";
+import route from "../../routes";
 
 const Body = styled.div`
-  padding: 0 21px 0 21px;
+  padding: 35px 21px 0 21px;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
 `;
 
 const Subtitle = styled.span`
@@ -72,11 +76,13 @@ const CREATE_ACCOUNT_MUTATION = gql`
     createAccount(email: $email, password: $password, username: $username) {
       ok
       error
+      id
     }
   }
 `;
 
-function Signup({ history }) {
+function Signup() {
+  const history = useHistory();
   const location = useLocation();
   const {
     register,
@@ -105,13 +111,14 @@ function Signup({ history }) {
   };
   const onCompleted = (data) => {
     const {
-      createAccount: { ok, error },
+      createAccount: { ok, error, id },
     } = data;
     if (!ok) {
       return setError("username", {
         message: error,
       });
     }
+    return history.push(route.signUp + "/additionalinfo", { id });
   };
   const [createAccount, { loading }] = useMutation(CREATE_ACCOUNT_MUTATION, {
     onCompleted,

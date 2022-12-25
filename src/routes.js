@@ -1,6 +1,6 @@
 const route = {
   home: "/",
-  signUp: "/sign-up",
+  signUp: "/signup",
   login: "/login",
   like: "/like",
   notification: "/notification",

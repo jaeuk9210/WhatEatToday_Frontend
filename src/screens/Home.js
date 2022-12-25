@@ -117,9 +117,15 @@ const Container = styled(SContainer)`
 
 function Home() {
   const history = useHistory();
-  const user = useUser().data;
+  const { data: user, refetch } = useUser();
   const feedData = useQuery(FEED_QUERY).data;
-  console.log(feedData);
+
+  if (!user?.me?.firstName || user?.me?.firstName === null) {
+    refetch().then(({ data }) => {
+      if (data.me.firstName === null)
+        history.push(route.signUp + "/additionalinfo", { id: data.me.id });
+    });
+  }
   return (
     <Container>
       <PageTitle title="오늘 뭐 먹지" />
