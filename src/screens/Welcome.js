@@ -16,7 +16,7 @@ import {
   IButton,
 } from "../components/Buttons";
 import PageTitle from "../components/PageTitle";
-import { H2 } from "../style";
+import { Container, H2 } from "../style";
 import Textinput from "../components/Textinput";
 import { useForm } from "react-hook-form";
 import { gql, useMutation } from "@apollo/client";
@@ -38,6 +38,7 @@ const Body = styled.div`
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
+  height: 10%;
 `;
 
 const Bottom = styled.div`
@@ -68,15 +69,6 @@ const Hightlight = styled.span`
   color: ${(props) => props.theme.accentColor};
 `;
 
-const Container = styled.div`
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  flex-grow: 1;
-`;
-
 const Wrapper = styled.div`
   display: flex;
   max-width: 930px;
@@ -88,6 +80,10 @@ const Wrapper = styled.div`
   padding-top: 20px;
 `;
 
+const Img = styled.img`
+  height: 300px;
+`;
+
 const EXIST_ACCOUNT_MUTATION = gql`
   mutation existAccount($email: String!) {
     existAccount(email: $email) {
@@ -95,6 +91,8 @@ const EXIST_ACCOUNT_MUTATION = gql`
     }
   }
 `;
+
+const SSlider = styled(Slider)``;
 
 function Welcome({ history }) {
   history = useHistory();
@@ -108,10 +106,10 @@ function Welcome({ history }) {
     autoplay: false,
     autoplaySpeed: 4000,
     pauseOnHover: true,
+    adaptiveHeight: true,
     appendDots: (dots) => (
       <div
         style={{
-          width: "100%",
           position: "relative",
           bottom: "0px",
           display: "flex",
@@ -165,14 +163,14 @@ function Welcome({ history }) {
     <Container>
       <PageTitle title="오늘 뭐 먹지?" />
       <Wrapper>
-        <Slider {...settings}>
+        <SSlider {...settings}>
           <Body>
             <H2 align={"center"}>
               조건을 입력하고
               <br />
               <Hightlight>AI에게 메뉴를 추천</Hightlight> 받아보세요
             </H2>
-            <img alt="slider1" src="welcome/slide1.png" />
+            <Img alt="slider1" src="welcome/slide1.png" />
           </Body>
           <Body>
             <H2 align={"center"}>
@@ -180,7 +178,7 @@ function Welcome({ history }) {
               <br />
               <Hightlight>음식 커뮤니티</Hightlight>를 만들어보세요
             </H2>
-            <img alt="slider2" src="welcome/slide2.png" />
+            <Img alt="slider2" src="welcome/slide2.png" />
           </Body>
           <Body>
             <H2 align={"center"}>
@@ -188,9 +186,9 @@ function Welcome({ history }) {
               <br />
               <Hightlight>식당의 발전</Hightlight>을 불러옵니다
             </H2>
-            <img alt="slider3" src="welcome/slide3.png" />
+            <Img alt="slider3" src="welcome/slide3.png" />
           </Body>
-        </Slider>
+        </SSlider>
         <Bottom>
           <Subtitle>
             계속 진행하면 ‘오늘 뭐 먹지’ 서비스 약관에 동의하고 <br />

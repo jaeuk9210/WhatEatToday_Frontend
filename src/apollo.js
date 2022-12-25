@@ -30,7 +30,7 @@ export const isShowStoryBottomSheetVar = makeVar(false);
 
 // Apollo Client
 const httpLink = createHttpLink({
-  uri: "http://localhost:4002/graphql",
+  uri: "http://192.168.0.2:4002/graphql",
 });
 
 const authLink = setContext((_, { headers }) => {

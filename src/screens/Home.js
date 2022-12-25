@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Container as SContainer, Hightlight, H2 } from "../style";
+import { Container, Hightlight, H2 } from "../style";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import route from "../routes";
@@ -109,10 +109,6 @@ const TopImg = styled.img`
   width: 100%;
   right: -50px;
   bottom: 0px;
-`;
-
-const Container = styled(SContainer)`
-  overflow: scroll;
 `;
 
 function Home() {

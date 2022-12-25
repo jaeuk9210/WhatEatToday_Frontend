@@ -8,6 +8,7 @@ export const Appbar = styled.header`
   align-items: center;
   justify-content: center;
   position: sticky;
+
   top: 0px;
   background-color: #fff;
 `;

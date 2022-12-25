@@ -17,6 +17,8 @@ export const GlobalStyles = createGlobalStyle`
   }
   * {
     box-sizing: border-box;
+    font-family: "Pretendard";
+    font-style: normal;
   }
   a{
     text-decoration: none;
@@ -25,12 +27,15 @@ export const GlobalStyles = createGlobalStyle`
     background-color: transparent;
     border: none;
   }
-  body{
-    font-family: "Pretendard";
-    font-style: normal;
+  html, body{
     background-color: #f5f5f5;
     -ms-overflow-style: none;
     overflow: hidden;
+    width: 100%;
+    height: 100%;
+  }
+  #root{
+    height: 100%;
   }
 
   ::-webkit-scrollbar {
@@ -94,11 +99,12 @@ export const Sub = styled.span`
 
 export const Container = styled.div`
   width: 100%;
+  height: 100%;
   flex-grow: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100vh;
+  overflow: hidden;
 `;
 
 export const Box = styled.div`
@@ -116,4 +122,5 @@ export const Wrapper = styled.div`
   align-items: center;
   width: 100%;
   height: 100%;
+  overflow: scroll;
 `;

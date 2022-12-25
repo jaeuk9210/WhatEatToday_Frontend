@@ -25,7 +25,6 @@ import Place from "./screens/Place";
 import Story from "./screens/Story";
 import Result from "./screens/Choose/Result";
 import AdditionalInfo from "./screens/Signup/AdditionalInfo";
-import useUser from "./hooks/useUser";
 
 function App() {
   const isLoggedin = useReactiveVar(isLoggedInVar);
